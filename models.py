@@ -1,4 +1,6 @@
-from db import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class School(db.Model):
     __tablename__ = "school"

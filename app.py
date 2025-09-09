@@ -2,7 +2,8 @@ from flask import Flask, render_template
 
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
-from db import db
+
+from models import db
 
 app = Flask(__name__)
 app.config.from_object(Config)
