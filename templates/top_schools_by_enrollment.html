@@ -2,31 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>All Schools</title>
+  <title>Top Schools by Enrollment</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
   <div class="container py-4">
-    <h2 class="mb-3">All Schools</h2>
+    <h2 class="mb-3">Top Schools by Enrollment</h2>
     <a href="/" class="btn btn-outline-primary mb-3">Back to Home</a>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>School ID</th>
-          <th>Name</th>
-          <th>Team Name</th>
+          <th>School Name</th>
           <th>City</th>
-          <th>ZIP</th>
+          <th>Enrollment</th>
         </tr>
       </thead>
       <tbody>
         {% for school in results %}
         <tr>
-          <td>{{ school.school_id }}</td>
           <td>{{ school.school_name }}</td>
-          <td>{{ school.team_name }}</td>
           <td>{{ school.city }}</td>
-          <td>{{ school.zip }}</td>
+          <td>
+            {# If result returns enrollment with School object, you may need to adjust below line #}
+            {{ school.enrollments[0].enrollment if school.enrollments else "N/A" }}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enrollment By School</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container py-4">
+    <h2 class="mb-3">Enrollment Over Years</h2>
+    <a href="/" class="btn btn-outline-primary mb-3">Back to Home</a>
+    <br>
+    {% if plot_data %}
+      <img src="data:image/png;base64,{{ plot_data }}" class="img-fluid" alt="Enrollment Plot">
+    {% else %}
+      <div class="alert alert-warning">No enrollment data available for this school.</div>
+    {% endif %}
+  </div>
+</body>
+</html>

@@ -2,31 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>All Schools</title>
+  <title>Average Result by Event</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
   <div class="container py-4">
-    <h2 class="mb-3">All Schools</h2>
+    <h2 class="mb-3">Average Result by Event</h2>
     <a href="/" class="btn btn-outline-primary mb-3">Back to Home</a>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>School ID</th>
-          <th>Name</th>
-          <th>Team Name</th>
-          <th>City</th>
-          <th>ZIP</th>
+          <th>Event</th>
+          <th>Average Result</th>
         </tr>
       </thead>
       <tbody>
-        {% for school in results %}
+        {% for event, avg_result in results %}
         <tr>
-          <td>{{ school.school_id }}</td>
-          <td>{{ school.school_name }}</td>
-          <td>{{ school.team_name }}</td>
-          <td>{{ school.city }}</td>
-          <td>{{ school.zip }}</td>
+          <td>{{ event }}</td>
+          <td>{{ avg_result | round(2) }}</td>
         </tr>
         {% endfor %}
       </tbody>
