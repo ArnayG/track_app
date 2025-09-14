@@ -1,0 +1,11 @@
+/* npx @tailwindcss/cli -i ./static/input.css -o ./static/output.css --watch */
+@import "tailwindcss";
+/* ./tailwindcss-windows-x64.exe -i ./static/input.css -o ./static/output.css --watch */
+@plugin "daisyui" {
+  themes: autumn --default, autumn --prefersdark;
+  root: ":root";
+  include: ;
+  exclude: ;
+  prefix: ;
+  logs: true;
+}

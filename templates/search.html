@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-4xl font-bold mb-4 text-primary">Find Athlete</h1>
+
+<div class="card bg-base-100">
+  <div class="card-body gap-4">
+    <input id="q" type="text" placeholder="Type name and/or school..." class="input input-bordered w-full" />
+    <ul id="results" class="menu bg-base-100 rounded-box shadow hidden w-full"></ul>
+
+    <div id="empty" class="text-sm text-base-content/60 hidden">No results yet — start typing to search.</div>
+    <div id="error" class="alert alert-error hidden">
+      <span>Could not load results. Try again.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const input = document.getElementById('q');
+  const resultsEl = document.getElementById('results');
+  const emptyEl = document.getElementById('empty');
+  const errorEl = document.getElementById('error');
+
+  function debounce(fn, ms = 250) {
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(() => fn(...args), ms);
+    };
+  }
+
+  async function fetchJSON(url) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return await res.json();
+    } catch (e) {
+      console.error(e);
+      return { error: true, data: [] };
+    }
+  }
+
+  function renderResults(items) {
+    resultsEl.innerHTML = '';
+    if (!items.length) {
+      emptyEl.classList.remove('hidden');
+      resultsEl.classList.add('hidden');
+      return;
+    }
+    emptyEl.classList.add('hidden');
+    resultsEl.classList.remove('hidden');
+
+    items.forEach(item => {
+      const li = document.createElement('li');
+
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-ghost justify-between w-full text-left';
+      const genderBadgeClass = item.gender === 'male' ? 'badge-info' : 'badge-secondary';
+      btn.innerHTML = `
+        <div class="flex flex-col items-start">
+          <span class="font-medium">${item.name}</span>
+          <span class="text-xs opacity-70">School: ${item.school}</span>
+        </div>
+        <span class="badge ${genderBadgeClass} capitalize">${item.gender}</span>
+      `.trim();
+
+      btn.addEventListener('click', () => {
+        window.location.href = `/athlete/${item.id}`;
+      });
+
+      li.appendChild(btn);
+      resultsEl.appendChild(li);
+    });
+  }
+
+
+
+  // NEW: fetch all athletes helper
+  async function fetchAllAthletes() {
+    const url = new URL('/api/search', window.location.origin);
+    url.searchParams.set('all', '1'); // server returns all when all=1
+    const resp = await fetchJSON(url);
+    if (resp.error) {
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    errorEl.classList.add('hidden');
+    renderResults(resp);
+  }
+
+  const doSearch = debounce(async () => {
+    const q = input.value.trim();
+    if (!q) {
+      // When blank, fetch and show ALL athletes
+      await fetchAllAthletes();
+      return;
+    }
+
+    const url = new URL('/api/search', window.location.origin);
+    url.searchParams.set('q', q);
+
+    const resp = await fetchJSON(url);
+    if (resp.error) {
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    errorEl.classList.add('hidden');
+    renderResults(resp);
+  }, 250);
+
+  input.addEventListener('input', doSearch);
+
+  // Initial load: show ALL athletes
+  fetchAllAthletes();
+</script>
+{% endblock %}

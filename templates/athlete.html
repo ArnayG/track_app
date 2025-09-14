@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Back Button fixed at top left -->
+<a href="{{ url_for('index') }}"
+   class="btn btn-outline">
+  ← Back to Search
+</a>
+
+<div class="flex flex-col items-center text-center  min-h-[70vh] text-2xl mb-2">
+    <div class="text-6xl font-extrabold text-primary -mb-1">{{ name }}</div>
+    <div class="capitalize">{{ gender }}</div>
+    <div class="font-semibold mb-10">{{ school }}</div>
+
+    <div class="text-left font-bold w-full">Achievements</div>
+    <div class="text-left font-medium w-full text-lg mb-10">
+        <span class="tooltip tooltip-bottom tooltip-primary" data-tip="At least one performance in the top 25% across all sectionals">⭐ Top 25% Sectional</span>
+         | 
+        <span class="tooltip tooltip-bottom tooltip-primary" data-tip="Made it to Regionals">🏅 Regional Qualifier</span> 
+        | 
+        <span class="tooltip tooltip-bottom tooltip-primary" data-tip="Made it to State meet">🏆 State Qualifier</span>
+         | 
+        <span class="tooltip tooltip-bottom tooltip-primary" data-tip="Top 9 at State meet">🥇 State Medalist</span>
+    </div>
+
+    <div class="text-left font-bold w-full">Results</div>
+    <table class="table bg-base-100 mt-2 shadow-lg">
+        <!-- head -->
+        <thead>
+        <tr class="text-primary text-lg">
+            <th class="p-5">Year</th>
+            <th class="p-5 ">Event</th>
+            <th class="p-5">Sectional</th>
+            <th class="p-5">Regional</th>
+            <th class="p-5">State</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- row 1 -->
+        <tr>
+            <td>2023</td>
+            <td>200m</td>
+            <td class="link">23.80 (4th)</td>
+            <td class="link">23.65 (5th)</td>
+            <td> - </td>
+        </tr>
+        <tr>
+            <td>2023</td>
+            <td>400m</td>
+            <td class="link">51.30 (6th)</td>
+            <td class="link">51.10 (7th)</td>
+            <td class="link"> 51.40 (12th) </td>
+        </tr>
+        <tr>
+            <td>2024</td>
+            <td>400m</td>
+            <td class="link">50.90 (1st)</td>
+            <td class="link">51.02 (7th)</td>
+            <td> - </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
